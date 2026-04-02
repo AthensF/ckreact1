@@ -4,7 +4,7 @@ import {
   LiveCanvas,
   useCameraKit,
 } from '@snap/react-camera-kit';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const LENS_GROUP_ID = 'a4da2ba5-6d01-441f-942a-99b9a0143fd6';
 const API_TOKEN = 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzc1MDU5Mjc2LCJzdWIiOiJmN2U5ODBjNC00ODhhLTRkZWMtOWM3NS1jODU4NDIzZTZhODh-U1RBR0lOR345NmU2Y2MwNS1mMzI5LTQyZjUtODU5Zi1iOGYzZjNlZWQyYmQifQ._tPEEnmGU12iavp6NgZ_elyKERRQWkMS_6nBwhnw8h0';
@@ -26,6 +26,8 @@ function LensSwitcher() {
     }
   }, [sdkStatus]);
 
+  const [cameraFacing, setCameraFacing] = useState<'user' | 'environment'>('user');
+
   return (
     <div>
       <select
@@ -42,9 +44,20 @@ function LensSwitcher() {
         ))}
       </select>
 
+      <select
+        value={cameraFacing}
+        onChange={(e) => setCameraFacing(e.target.value as 'user' | 'environment')} >
+        <option value="user">Front Camera</option>
+        <option value="environment">Back Camera</option>
+      </select>
+
       <button onClick={toggleMuted}>{isMuted ? 'Unmute' : 'Mute'}</button>
 
-      <LensPlayer lensId={lens.lensId} lensGroupId={LENS_GROUP_ID}>
+      <LensPlayer 
+        lensId={lens.lensId} 
+        lensGroupId={LENS_GROUP_ID}
+        source={{ kind: 'camera', options: { cameraFacing: cameraFacing } }}
+        >
         <LiveCanvas style={{ width: '100%', maxWidth: 640 }} />
       </LensPlayer>
     </div>

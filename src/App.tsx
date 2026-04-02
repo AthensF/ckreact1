@@ -1,7 +1,6 @@
 import {
   CameraKitProvider,
   LensPlayer,
-  LiveCanvas,
   useCameraKit,
 } from '@snap/react-camera-kit';
 import { useEffect, useState, useMemo } from 'react';

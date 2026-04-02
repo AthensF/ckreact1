@@ -57,6 +57,10 @@ function LensSwitcher() {
     <section className = "workspace">      
       <aside className="panel">
         <section className="card">
+          <h2>Controls</h2>
+          <label className="field-label" htmlFor="lens-select">
+            Lens to Apply
+          </label>
           <div className="select-row">
             <select
               value={lens.lensId ?? ''}
@@ -71,7 +75,10 @@ function LensSwitcher() {
               ))}
             </select>
           </div>
-
+          
+          <label className="field-label" htmlFor="lens-select">
+            Select Camera
+          </label>
           < div className='select-row'>
             <select
               value={cameraFacing}
